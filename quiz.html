@@ -813,9 +813,45 @@
       setupPhase1FormListener();
     }
 
+    async function sendToZapier(formData, scores) {
+      // Send Phase 1 data to Zapier webhook (Story 2.1)
+      const zapierWebhookUrl = 'https://hooks.zapier.com/hooks/catch/YOUR_WEBHOOK_ID/';
+
+      const payload = {
+        nome: formData.nome,
+        whatsapp: formData.whatsapp,
+        email: formData.email,
+        idade_faixa: formData.idade,
+        avatar: determineAvatar(scores),
+        score_mental: scores.m,
+        score_peso: scores.p,
+        score_sindrome: scores.s,
+        timestamp: new Date().toISOString()
+      };
+
+      try {
+        const response = await fetch(zapierWebhookUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        if (!response.ok) {
+          console.warn('Zapier webhook returned non-200 status:', response.status);
+        }
+
+        console.log('Data sent to Zapier:', payload);
+        return true;
+      } catch (error) {
+        console.error('Error sending to Zapier:', error);
+        // Don't block user if Zapier fails - data is still in localStorage
+        return false;
+      }
+    }
+
     function setupPhase1FormListener() {
       const form = document.getElementById('captureFormPhase1');
-      form.addEventListener('submit', (e) => {
+      form.addEventListener('submit', async (e) => {
         e.preventDefault();
 
         const formData = {
@@ -832,13 +868,18 @@
           return;
         }
 
-        // Save Phase 1 data
+        // Save Phase 1 data locally first
         localStorage.setItem('phase1Data', JSON.stringify(formData));
 
-        console.log('Phase 1 data captured:', formData);
+        // Get scores for Zapier
+        const scores = JSON.parse(localStorage.getItem('quizScores'));
+
+        // Send to Zapier (Story 2.1)
+        await sendToZapier(formData, scores);
+
+        console.log('Phase 1 data captured and sent to Zapier:', formData);
 
         // Route to LP with form data
-        const scores = JSON.parse(localStorage.getItem('quizScores'));
         routeToLP(scores, formData);
       });
     }
