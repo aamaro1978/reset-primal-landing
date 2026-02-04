@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reset Primal - Quiz Diagnóstico</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      line-height: 1.6;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 700px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+      padding: 40px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .header h1 {
+      font-size: 28px;
+      color: #1e3c72;
+      margin-bottom: 10px;
+    }
+
+    .header p {
+      color: #666;
+      font-size: 16px;
+    }
+
+    .progress-section {
+      margin-bottom: 30px;
+    }
+
+    .progress-bar-container {
+      width: 100%;
+      height: 6px;
+      background: #e0e0e0;
+      border-radius: 3px;
+      overflow: hidden;
+      margin-bottom: 15px;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, #1e3c72 0%, #2a5298 100%);
+      width: 5%;
+      transition: width 0.3s ease;
+    }
+
+    .progress-text {
+      text-align: center;
+      color: #999;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .question-container {
+      display: none;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .question-container.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .question-number {
+      color: #1e3c72;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 15px;
+    }
+
+    .question-text {
+      font-size: 18px;
+      color: #2c3e50;
+      font-weight: 600;
+      margin-bottom: 25px;
+      line-height: 1.4;
+    }
+
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 30px;
+    }
+
+    .option {
+      padding: 15px 18px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      background: white;
+      font-size: 16px;
+      color: #2c3e50;
+      position: relative;
+    }
+
+    .option:hover {
+      border-color: #2a5298;
+      background: #f0f5ff;
+      transform: translateX(5px);
+    }
+
+    .option.selected {
+      border-color: #1e3c72;
+      background: linear-gradient(135deg, #e3f2fd 0%, #f0f5ff 100%);
+      font-weight: 600;
+      color: #1e3c72;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 15px;
+      justify-content: space-between;
+      margin-top: 40px;
+    }
+
+    button {
+      padding: 14px 28px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      min-width: 120px;
+    }
+
+    .btn-previous {
+      background: #f0f0f0;
+      color: #333;
+      flex: 1;
+    }
+
+    .btn-previous:hover {
+      background: #e0e0e0;
+    }
+
+    .btn-previous:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .btn-next {
+      background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+      color: white;
+      flex: 1;
+    }
+
+    .btn-next:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(30, 60, 114, 0.3);
+    }
+
+    .btn-finish {
+      background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+      color: white;
+      width: 100%;
+      padding: 16px 28px;
+      font-size: 18px;
+    }
+
+    .btn-finish:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3);
+    }
+
+    .completion-screen {
+      display: none;
+      text-align: center;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .completion-screen.active {
+      display: block;
+    }
+
+    .completion-icon {
+      font-size: 80px;
+      margin-bottom: 20px;
+    }
+
+    .completion-message {
+      font-size: 24px;
+      color: #1e3c72;
+      font-weight: 600;
+      margin-bottom: 15px;
+    }
+
+    .completion-subtext {
+      color: #666;
+      font-size: 16px;
+      margin-bottom: 30px;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 25px;
+      }
+
+      .header h1 {
+        font-size: 24px;
+      }
+
+      .question-text {
+        font-size: 16px;
+      }
+
+      .option {
+        padding: 14px 16px;
+        font-size: 15px;
+      }
+
+      button {
+        padding: 12px 20px;
+        font-size: 14px;
+      }
+
+      .buttons {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>🎯 Reset Primal</h1>
+      <p>Descubra sua solução em 2 minutos</p>
+    </div>
+
+    <div class="progress-section">
+      <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+      <div class="progress-text" id="progressText">Pergunta 1 de 20</div>
+    </div>
+
+    <div id="quizContainer">
+      <!-- Questions will be rendered here -->
+    </div>
+
+    <div class="completion-screen" id="completionScreen">
+      <div class="completion-icon">✅</div>
+      <div class="completion-message">Análise Completa!</div>
+      <div class="completion-subtext">Descobrindo sua solução personalizada...</div>
+    </div>
+
+    <div class="buttons" id="buttons">
+      <button class="btn-previous" id="prevBtn" style="display: none;">← Anterior</button>
+      <button class="btn-next" id="nextBtn">Próxima →</button>
+    </div>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        id: 1,
+        text: "Qual é sua principal frustração?",
+        options: [
+          { text: "Não consigo pensar direito", avatar: "m", points: 3 },
+          { text: "Peso teimoso / barriga inchada", avatar: "p", points: 3 },
+          { text: "Exames sempre ruins / medo de diabetes", avatar: "s", points: 3 }
+        ]
+      },
+      {
+        id: 2,
+        text: "Como está seu foco no trabalho?",
+        options: [
+          { text: "Fico 20 minutos sem processar informações", avatar: "m", points: 4 },
+          { text: "Tenho preguiça de começar as coisas", avatar: "p", points: 3 },
+          { text: "Meu corpo não acompanha minha vontade", avatar: "s", points: 3 }
+        ]
+      },
+      {
+        id: 3,
+        text: "Como você acorda?",
+        options: [
+          { text: "Cansado, mesmo após 7-8h de sono", avatar: "m", points: 3 },
+          { text: "Com dores no corpo / articulações", avatar: "p", points: 2 },
+          { text: "Sem disposição para o dia", avatar: "s", points: 3 }
+        ]
+      },
+      {
+        id: 4,
+        text: "Quanto peso você ganhou nos últimos 5 anos?",
+        options: [
+          { text: "Pouco (0-10kg)", avatar: "p", points: 2 },
+          { text: "Médio (10-20kg)", avatar: "p", points: 4 },
+          { text: "Muito (20kg+), principalmente na barriga", avatar: "p", points: 5 }
+        ]
+      },
+      {
+        id: 5,
+        text: "Como é sua energia após as refeições?",
+        options: [
+          { text: "Despenca 2-3 horas depois / fico sonolento", avatar: "m", points: 4 },
+          { text: "Fico muito inchado e desconfortável", avatar: "p", points: 3 },
+          { text: "Sinto picos de energia seguidos de queda", avatar: "s", points: 4 }
+        ]
+      },
+      {
+        id: 6,
+        text: "Você tem diagnóstico de síndrome metabólica?",
+        options: [
+          { text: "Não tenho diagnóstico", avatar: "s", points: 0 },
+          { text: "Tenho suspeita, mas não confirmado", avatar: "s", points: 3 },
+          { text: "Sim, confirmado pelo médico", avatar: "s", points: 5 }
+        ]
+      },
+      {
+        id: 7,
+        text: "Você já tentou várias dietas?",
+        options: [
+          { text: "Nunca tentei dieta", avatar: "p", points: 1 },
+          { text: "Tentei algumas, com pouco resultado", avatar: "p", points: 3 },
+          { text: "Tentei várias, nada funciona de verdade", avatar: "p", points: 4 }
+        ]
+      },
+      {
+        id: 8,
+        text: "Você notaria mudanças significativas em sua vitalidade?",
+        options: [
+          { text: "Não percebi diferença nenhuma", avatar: "s", points: 1 },
+          { text: "Notei pequenas mudanças", avatar: "s", points: 2 },
+          { text: "Sim, mudanças significativas", avatar: "s", points: 4 }
+        ]
+      },
+      {
+        id: 9,
+        text: "Como está sua memória?",
+        options: [
+          { text: "Ótima, lembro de tudo", avatar: "m", points: 0 },
+          { text: "Esqueço algumas coisas / nomes", avatar: "m", points: 3 },
+          { text: "Péssima, esqueço constantemente palavras e nomes", avatar: "m", points: 4 }
+        ]
+      },
+      {
+        id: 10,
+        text: "O que mais importa para você mudar?",
+        options: [
+          { text: "Pensar claro e ter energia estável", avatar: "m", points: 5 },
+          { text: "Perder peso e caber nas roupas", avatar: "p", points: 5 },
+          { text: "Normalizar exames e evitar doenças", avatar: "s", points: 5 }
+        ]
+      },
+      {
+        id: 11,
+        text: "Como está sua pressão arterial?",
+        options: [
+          { text: "Normal", avatar: "s", points: 0 },
+          { text: "Levemente elevada", avatar: "s", points: 2 },
+          { text: "Elevada ou tomo remédio", avatar: "s", points: 4 }
+        ]
+      },
+      {
+        id: 12,
+        text: "Como você se sente ao se olhar no espelho?",
+        options: [
+          { text: "Me reconheço e gosto do que vejo", avatar: "p", points: 0 },
+          { text: "Reconheço, mas não era assim antes", avatar: "p", points: 3 },
+          { text: "Não me reconheço, evito espelhos", avatar: "p", points: 4 }
+        ]
+      },
+      {
+        id: 13,
+        text: "Seu pai ou mãe tem/teve diabetes?",
+        options: [
+          { text: "Não", avatar: "s", points: 0 },
+          { text: "Sim, um deles", avatar: "s", points: 2 },
+          { text: "Sim, os dois", avatar: "s", points: 3 }
+        ]
+      },
+      {
+        id: 14,
+        text: "Como está sua produtividade?",
+        options: [
+          { text: "Consigo fazer tudo rápido", avatar: "m", points: 0 },
+          { text: "Demore um pouco mais que antes", avatar: "m", points: 2 },
+          { text: "Demoro 2x mais tempo para tudo", avatar: "m", points: 4 }
+        ]
+      },
+      {
+        id: 15,
+        text: "Qual é sua circunferência abdominal (cintura)?",
+        options: [
+          { text: "< 94cm (normal)", avatar: "p", points: 0 },
+          { text: "94-102cm (sobrepeso)", avatar: "p", points: 2 },
+          { text: "> 102cm (risco)", avatar: ["p", "s"], points: 3 }
+        ]
+      },
+      {
+        id: 16,
+        text: "Você tem disfunção erétil?",
+        options: [
+          { text: "Não, funciona perfeitamente", avatar: "s", points: 0 },
+          { text: "Às vezes, não é frequente", avatar: "s", points: 2 },
+          { text: "Sim, frequentemente", avatar: "s", points: 5 }
+        ]
+      },
+      {
+        id: 17,
+        text: "Quantos cafés você toma por dia?",
+        options: [
+          { text: "Nenhum ou muito pouco (< 1)", avatar: "m", points: 0 },
+          { text: "1-2 cafés", avatar: "m", points: 2 },
+          { text: "3+ cafés para conseguir funcionar", avatar: "m", points: 4 }
+        ]
+      },
+      {
+        id: 18,
+        text: "Como você se sente em relação a fotos e espelhos?",
+        options: [
+          { text: "Normal, tiro fotos quando quero", avatar: "p", points: 0 },
+          { text: "Evito às vezes", avatar: "p", points: 2 },
+          { text: "Evito o máximo possível", avatar: "p", points: 4 }
+        ]
+      },
+      {
+        id: 19,
+        text: "Você toma medicação para múltiplas condições?",
+        options: [
+          { text: "Não tomo medicação", avatar: "s", points: 0 },
+          { text: "Tomo para 1 coisa", avatar: "s", points: 2 },
+          { text: "Tomo para 2+ condições", avatar: "s", points: 4 }
+        ]
+      },
+      {
+        id: 20,
+        text: "O que mais te assusta?",
+        options: [
+          { text: "Não conseguir pensar direito no futuro", avatar: "m", points: 6 },
+          { text: "Virar alguém que não se reconhece", avatar: "p", points: 6 },
+          { text: "Virar diabético / piorar minha saúde", avatar: "s", points: 6 }
+        ]
+      }
+    ];
+
+    let currentQuestion = 0;
+    const selectedAnswers = [];
+
+    function initializeQuiz() {
+      renderQuestion();
+      setupEventListeners();
+    }
+
+    function renderQuestion() {
+      const container = document.getElementById('quizContainer');
+      const question = questions[currentQuestion];
+
+      let optionsHTML = '';
+      question.options.forEach((option, index) => {
+        optionsHTML += `
+          <div class="option" data-index="${index}" data-avatar="${option.avatar}" data-points="${option.points}">
+            ${option.text}
+          </div>
+        `;
+      });
+
+      container.innerHTML = `
+        <div class="question-container active">
+          <div class="question-number">Pergunta ${currentQuestion + 1} de ${questions.length}</div>
+          <div class="question-text">${question.text}</div>
+          <div class="options" id="options">
+            ${optionsHTML}
+          </div>
+        </div>
+      `;
+
+      updateProgressBar();
+      setupOptionListeners();
+      updateButtonState();
+    }
+
+    function setupOptionListeners() {
+      const options = document.querySelectorAll('.option');
+      options.forEach((option, index) => {
+        if (selectedAnswers[currentQuestion] === index) {
+          option.classList.add('selected');
+        }
+        option.addEventListener('click', () => selectOption(index));
+      });
+    }
+
+    function selectOption(index) {
+      selectedAnswers[currentQuestion] = index;
+      setupOptionListeners();
+    }
+
+    function updateProgressBar() {
+      const progress = ((currentQuestion + 1) / questions.length) * 100;
+      document.getElementById('progressBar').style.width = progress + '%';
+      document.getElementById('progressText').textContent = `Pergunta ${currentQuestion + 1} de ${questions.length}`;
+    }
+
+    function updateButtonState() {
+      const prevBtn = document.getElementById('prevBtn');
+      const nextBtn = document.getElementById('nextBtn');
+
+      if (currentQuestion === 0) {
+        prevBtn.style.display = 'none';
+      } else {
+        prevBtn.style.display = 'block';
+      }
+
+      if (currentQuestion === questions.length - 1) {
+        nextBtn.textContent = '✅ Finalizar Quiz';
+        nextBtn.classList.add('btn-finish');
+      } else {
+        nextBtn.textContent = 'Próxima →';
+        nextBtn.classList.remove('btn-finish');
+      }
+    }
+
+    function setupEventListeners() {
+      document.getElementById('nextBtn').addEventListener('click', nextQuestion);
+      document.getElementById('prevBtn').addEventListener('click', previousQuestion);
+    }
+
+    function nextQuestion() {
+      if (currentQuestion < questions.length - 1) {
+        currentQuestion++;
+        renderQuestion();
+        window.scrollTo(0, 0);
+      } else {
+        finishQuiz();
+      }
+    }
+
+    function previousQuestion() {
+      if (currentQuestion > 0) {
+        currentQuestion--;
+        renderQuestion();
+        window.scrollTo(0, 0);
+      }
+    }
+
+    function finishQuiz() {
+      // Save data to localStorage for next story
+      const quizData = {
+        responses: selectedAnswers,
+        questions: questions,
+        timestamp: new Date().toISOString()
+      };
+
+      localStorage.setItem('quizResponses', JSON.stringify(quizData));
+
+      // Show completion screen
+      document.getElementById('quizContainer').innerHTML = '';
+      document.getElementById('completionScreen').classList.add('active');
+      document.getElementById('buttons').style.display = 'none';
+
+      // Simulate redirect after 3 seconds (Story 1.2 will handle scoring and routing)
+      setTimeout(() => {
+        alert('Quiz completo! Suas respostas foram salvas.\n\nEm desenvolvimento:\n- Story 1.2: Scoring system\n- Story 1.3: Roteamento automático');
+      }, 2000);
+    }
+
+    // Initialize quiz on page load
+    document.addEventListener('DOMContentLoaded', initializeQuiz);
+  </script>
+</body>
+</html>
