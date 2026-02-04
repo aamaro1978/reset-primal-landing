@@ -473,6 +473,9 @@
     const selectedAnswers = [];
 
     function initializeQuiz() {
+      // Run tie-breaking tests on load (Story 1.4)
+      runTieBreakingTests();
+
       renderQuestion();
       setupEventListeners();
     }
@@ -613,6 +616,52 @@
       } else {
         return 'mental';
       }
+    }
+
+    // Test scenarios for tie-breaking (Story 1.4)
+    function runTieBreakingTests() {
+      const testCases = [
+        { scores: { m: 34, p: 8, s: 5 }, expected: 'mental', name: 'Mental > Peso > Síndrome' },
+        { scores: { m: 6, p: 31, s: 9 }, expected: 'peso', name: 'Peso > Mental > Síndrome' },
+        { scores: { m: 4, p: 7, s: 36 }, expected: 'síndrome', name: 'Síndrome > Peso > Mental' },
+        { scores: { m: 20, p: 20, s: 10 }, expected: 'peso', name: 'Empate M=P, P>S → Peso' },
+        { scores: { m: 10, p: 20, s: 20 }, expected: 'síndrome', name: 'Empate P=S, S>M → Síndrome' },
+        { scores: { m: 20, p: 10, s: 20 }, expected: 'síndrome', name: 'Empate M=S, S>P → Síndrome' },
+        { scores: { m: 20, p: 20, s: 20 }, expected: 'síndrome', name: 'Empate Triplo M=P=S → Síndrome' },
+        { scores: { m: 15, p: 15, s: 14 }, expected: 'peso', name: 'Empate M=P próximo, P>S → Peso' },
+        { scores: { m: 5, p: 15, s: 15 }, expected: 'síndrome', name: 'Empate P=S próximo, S>M → Síndrome' },
+        { scores: { m: 0, p: 0, s: 0 }, expected: 'síndrome', name: 'Todos zero → Síndrome (tie-break)' }
+      ];
+
+      let passed = 0;
+      let failed = 0;
+      const results = [];
+
+      testCases.forEach((testCase, index) => {
+        const result = determineAvatar(testCase.scores);
+        const isPass = result === testCase.expected;
+
+        if (isPass) {
+          passed++;
+        } else {
+          failed++;
+        }
+
+        results.push({
+          testNumber: index + 1,
+          name: testCase.name,
+          scores: testCase.scores,
+          expected: testCase.expected,
+          actual: result,
+          status: isPass ? '✅ PASS' : '❌ FAIL'
+        });
+      });
+
+      console.log('🧪 TIE-BREAKING TESTS:');
+      console.table(results);
+      console.log(`Results: ${passed}/${testCases.length} passed, ${failed} failed`);
+
+      return { passed, failed, results };
     }
 
     function routeToLP(scores, formData = {}) {
