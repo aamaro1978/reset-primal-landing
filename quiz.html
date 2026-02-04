@@ -568,10 +568,48 @@
       }
     }
 
+    function calculateScore() {
+      // Calculate m, p, s scores based on selected answers
+      let scores = { m: 0, p: 0, s: 0 };
+
+      selectedAnswers.forEach((answerIndex, questionIndex) => {
+        if (answerIndex !== undefined) {
+          const question = questions[questionIndex];
+          const selectedOption = question.options[answerIndex];
+          const avatar = selectedOption.avatar;
+          const points = selectedOption.points;
+
+          // Handle single avatar or array of avatars
+          if (Array.isArray(avatar)) {
+            avatar.forEach(a => scores[a] += points);
+          } else {
+            scores[avatar] += points;
+          }
+        }
+      });
+
+      // Save scores to localStorage
+      localStorage.setItem('quizScores', JSON.stringify({
+        m: scores.m,
+        p: scores.p,
+        s: scores.s,
+        timestamp: new Date().toISOString()
+      }));
+
+      // Log for debugging
+      console.log('Quiz Scores Calculated:', scores);
+
+      return scores;
+    }
+
     function finishQuiz() {
-      // Save data to localStorage for next story
+      // Calculate scores (Story 1.2)
+      const scores = calculateScore();
+
+      // Save full quiz data to localStorage
       const quizData = {
         responses: selectedAnswers,
+        scores: scores,
         questions: questions,
         timestamp: new Date().toISOString()
       };
@@ -583,10 +621,26 @@
       document.getElementById('completionScreen').classList.add('active');
       document.getElementById('buttons').style.display = 'none';
 
-      // Simulate redirect after 3 seconds (Story 1.2 will handle scoring and routing)
+      // Display scores for testing
+      const scoresDisplay = `
+        ✅ Quiz Completo!
+
+        Seus Scores:
+        🧠 Mental: ${scores.m}
+        ⚖️ Peso: ${scores.p}
+        🩺 Síndrome: ${scores.s}
+
+        Maior Score: ${Object.keys(scores).reduce((a, b) => scores[a] > scores[b] ? a : b)}
+
+        Em desenvolvimento:
+        - Story 1.3: Roteamento automático para LP
+        - Story 2.0: Captura de dados
+      `;
+
+      // Show results after 1.5 seconds
       setTimeout(() => {
-        alert('Quiz completo! Suas respostas foram salvas.\n\nEm desenvolvimento:\n- Story 1.2: Scoring system\n- Story 1.3: Roteamento automático');
-      }, 2000);
+        alert(scoresDisplay);
+      }, 1500);
     }
 
     // Initialize quiz on page load
