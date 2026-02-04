@@ -602,6 +602,57 @@
       return scores;
     }
 
+    function determineAvatar(scores) {
+      // Determine avatar based on scores with tie-breaking rule: s > p > m
+      const { m, p, s } = scores;
+
+      if (s >= m && s >= p) {
+        return 'síndrome';
+      } else if (p >= m && p >= s) {
+        return 'peso';
+      } else {
+        return 'mental';
+      }
+    }
+
+    function routeToLP(scores, formData = {}) {
+      // Determine which LP to route to based on scores
+      const avatar = determineAvatar(scores);
+
+      // Map avatar to LP filename
+      const lpMap = {
+        'mental': 'reset-primal-final.html',
+        'peso': 'lp-emagrecimento.html',
+        'síndrome': 'lp-sindrome.html'
+      };
+
+      const lpFilename = lpMap[avatar];
+
+      // Build URL parameters
+      const params = new URLSearchParams({
+        avatar: avatar,
+        m: scores.m,
+        p: scores.p,
+        s: scores.s,
+        nome: formData.nome || '',
+        email: formData.email || '',
+        idade: formData.idade || ''
+      });
+
+      // Construct full URL
+      const baseUrl = window.location.origin + window.location.pathname.replace('quiz.html', '');
+      const redirectUrl = `${baseUrl}${lpFilename}?${params.toString()}`;
+
+      console.log('Roteamento:', {
+        avatar: avatar,
+        scores: scores,
+        redirectUrl: redirectUrl
+      });
+
+      // Redirect to appropriate LP
+      window.location.href = redirectUrl;
+    }
+
     function finishQuiz() {
       // Calculate scores (Story 1.2)
       const scores = calculateScore();
@@ -616,30 +667,41 @@
 
       localStorage.setItem('quizResponses', JSON.stringify(quizData));
 
+      // Determine avatar for display
+      const avatar = determineAvatar(scores);
+      const avatarLabels = {
+        'mental': '🧠 Nevoeiro Mental',
+        'peso': '⚖️ Emagrecimento',
+        'síndrome': '🩺 Síndrome Metabólica'
+      };
+
       // Show completion screen
       document.getElementById('quizContainer').innerHTML = '';
       document.getElementById('completionScreen').classList.add('active');
       document.getElementById('buttons').style.display = 'none';
 
-      // Display scores for testing
+      // Display scores and avatar determination
       const scoresDisplay = `
-        ✅ Quiz Completo!
+        ✅ Análise Completa!
 
         Seus Scores:
         🧠 Mental: ${scores.m}
         ⚖️ Peso: ${scores.p}
         🩺 Síndrome: ${scores.s}
 
-        Maior Score: ${Object.keys(scores).reduce((a, b) => scores[a] > scores[b] ? a : b)}
+        Seu Avatar: ${avatarLabels[avatar]}
 
-        Em desenvolvimento:
-        - Story 1.3: Roteamento automático para LP
-        - Story 2.0: Captura de dados
+        Redirecionando para sua solução personalizada...
       `;
 
-      // Show results after 1.5 seconds
+      // Show results and redirect
+      console.log('Scores finais:', scores);
+      console.log('Avatar determinado:', avatar);
+
+      // Redirect after 2 seconds (Story 1.3)
       setTimeout(() => {
         alert(scoresDisplay);
+        routeToLP(scores);
       }, 1500);
     }
 
