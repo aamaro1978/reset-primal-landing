@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reset Primal — Emagrecimento</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #2c3e50; background: #f8f9fa; }
+    .container { max-width: 720px; margin: 0 auto; padding: 20px; }
+    .hero { background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); color: white; padding: 60px 20px 40px; text-align: center; border-radius: 0 0 20px 20px; margin-bottom: 40px; }
+    .hero h1 { font-size: 42px; font-weight: 800; line-height: 1.2; margin-bottom: 16px; }
+    .hero .subheadline { font-size: 20px; margin-bottom: 24px; opacity: 0.95; font-weight: 400; }
+    .cta-button { background: #e74c3c; color: white; border: none; padding: 20px 40px; font-size: 20px; font-weight: 700; border-radius: 8px; cursor: pointer; display: inline-block; text-decoration: none; transition: transform 0.2s; margin: 30px 0; box-shadow: 0 4px 15px rgba(231,76,60,0.3); }
+    .cta-button:hover { transform: translateY(-2px); }
+    .section { background: white; padding: 40px 30px; margin-bottom: 30px; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+    .section h2 { font-size: 32px; margin-bottom: 20px; color: #1e3c72; }
+    .guarantee-box { background: #d4edda; border: 3px solid #28a745; padding: 35px; border-radius: 12px; margin: 40px 0; }
+    .guarantee-box h3 { color: #155724; margin-top: 0; font-size: 28px; }
+    .footer { text-align: center; padding: 40px 20px; color: #6c757d; font-size: 14px; }
+    .greeting { font-size: 24px; color: white; margin-bottom: 20px; }
+    @media (max-width: 600px) { .hero h1 { font-size: 32px; } .section { padding: 30px 20px; } }
+  </style>
+</head>
+<body>
+  <div class="hero">
+    <div class="container">
+      <div class="greeting" id="greeting">Olá visitante!</div>
+      <h1>Acorde Com Energia em 7 Dias</h1>
+      <p class="subheadline">Perder peso teimoso sem dieta impossível.</p>
+      <p style="font-size: 16px; opacity: 0.9;">O protocolo exato para eliminar aquela barriga, recuperar confiança e se reconhecer no espelho.</p>
+      <button class="cta-button">🚀 Liberar meu acesso</button>
+    </div>
+  </div>
+  <div class="container">
+    <div class="section">
+      <h2>Você já tentou tudo</h2>
+      <p>Dietas malucas, exercícios intensos, pílulas milagrosas... Nada funciona. Aquele peso teimoso na barriga continua lá, você não cabe nas roupas que gostava, e se evita espelhos.</p>
+      <p>A verdade? O problema não é falta de força de vontade. É falta de entender como seu corpo funciona de verdade.</p>
+    </div>
+    <div class="guarantee-box">
+      <h3>✓ Garantia de Bem-Estar de 7 Dias</h3>
+      <p style="font-size: 18px; margin: 20px 0;">Invista R$ 97. Siga o protocolo por 7 dias completos.</p>
+      <p style="font-size: 19px; font-weight: 600; color: #155724;">Se não notar diferença real, se não começar a perder peso — dinheiro de volta total.</p>
+    </div>
+    <button class="cta-button" style="width: 100%;">🚀 Começar Agora</button>
+  </div>
+  <div class="footer">
+    <p>© 2026 Reset Primal. Todos os direitos reservados.</p>
+    <p style="margin-top: 20px; font-size: 13px;">Este site não oferece conselhos médicos.</p>
+  </div>
+
+  <script>
+    // Parse URL params (Story 2.0, 2.1)
+    const params = new URLSearchParams(window.location.search);
+    const nome = params.get('nome') || 'visitante';
+
+    // Display personalized greeting
+    document.getElementById('greeting').textContent = `Olá, ${nome}!`;
+
+    console.log('LP Peso carregada com dados:', {
+      avatar: params.get('avatar'),
+      nome: nome,
+      scores: {
+        m: params.get('m'),
+        p: params.get('p'),
+        s: params.get('s')
+      }
+    });
+  </script>
+</body>
+</html>
