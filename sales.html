@@ -767,8 +767,9 @@
 // CONFIGURACAO - Substitua os valores abaixo
 // ============================================
 
-// Zapier webhook para captura de email (substituir com seu webhook real)
-const ZAPIER_WEBHOOK_URL = 'https://hooks.zapier.com/hooks/catch/26395198/ueigbjh/';
+// Zapier webhooks
+const ZAPIER_LEADS_SHEETS = 'https://hooks.zapier.com/hooks/catch/26395198/ueigbjh/';      // RP-Leads-Sheets
+const ZAPIER_LEADS_EMAIL = 'https://hooks.zapier.com/hooks/catch/26395198/uesyyi0/';       // RP-Leads-Email
 
 // Stripe Checkout URL (substituir com sua URL real do Stripe)
 const STRIPE_CHECKOUT_URL = '';
@@ -853,19 +854,29 @@ function handleEmailSubmit(e) {
     successEl.style.display = 'none';
     errorEl.style.display = 'none';
 
-    fetch(ZAPIER_WEBHOOK_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            nome: nome,
-            email: email,
-            whatsapp: whatsapp,
-            source: 'sales-page',
-            timestamp: new Date().toISOString()
+    var payload = {
+        nome: nome,
+        email: email,
+        whatsapp: whatsapp,
+        source: 'sales-page',
+        timestamp: new Date().toISOString()
+    };
+
+    // Enviar para ambos os webhooks (Sheets + Email)
+    Promise.all([
+        fetch(ZAPIER_LEADS_SHEETS, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        }),
+        fetch(ZAPIER_LEADS_EMAIL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
         })
-    })
-    .then(function(response) {
-        if (response.ok) {
+    ])
+    .then(function(responses) {
+        if (responses.every(function(r) { return r.ok; })) {
             btn.textContent = 'Enviado!';
             successEl.style.display = 'block';
             document.getElementById('nome-input').value = '';
