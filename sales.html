@@ -767,9 +767,9 @@
 // CONFIGURACAO - Substitua os valores abaixo
 // ============================================
 
-// Zapier webhooks
-const ZAPIER_LEADS_SHEETS = 'https://hooks.zapier.com/hooks/catch/26395198/ueigbjh/';      // RP-Leads-Sheets
-const ZAPIER_LEADS_EMAIL = 'https://hooks.zapier.com/hooks/catch/26395198/uesyyi0/';       // RP-Leads-Email
+// N8N Cloud webhooks (migrado de Zapier)
+const N8N_LEADS_SHEETS = 'https://singullarco.app.n8n.cloud/webhook/515504c7-1bbb-468a-9324-15f2096fe635';  // RP-Leads-Sheets
+const N8N_LEADS_EMAIL = '';  // RP-Leads-Email (em configuracao)
 
 // Stripe Checkout URL (substituir com sua URL real do Stripe)
 const STRIPE_CHECKOUT_URL = '';
@@ -862,21 +862,14 @@ function handleEmailSubmit(e) {
         timestamp: new Date().toISOString()
     };
 
-    // Enviar para ambos os webhooks (Sheets + Email)
-    Promise.all([
-        fetch(ZAPIER_LEADS_SHEETS, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-        }),
-        fetch(ZAPIER_LEADS_EMAIL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-        })
-    ])
-    .then(function(responses) {
-        if (responses.every(function(r) { return r.ok; })) {
+    // Enviar para webhook N8N (Sheets)
+    fetch(N8N_LEADS_SHEETS, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+    })
+    .then(function(response) {
+        if (response.ok) {
             btn.textContent = 'Enviado!';
             successEl.style.display = 'block';
             document.getElementById('nome-input').value = '';
