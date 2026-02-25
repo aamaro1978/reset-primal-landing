@@ -3,71 +3,267 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Reset Primal — Síndrome Metabólica</title>
+  <title>Reset Primal — Seus exames assustam. Dá para reverter em 7 dias.</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #2c3e50; background: #f8f9fa; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a2e; background: #f5f5f0; }
     .container { max-width: 720px; margin: 0 auto; padding: 20px; }
-    .hero { background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); color: white; padding: 60px 20px 40px; text-align: center; border-radius: 0 0 20px 20px; margin-bottom: 40px; }
-    .hero h1 { font-size: 42px; font-weight: 800; line-height: 1.2; margin-bottom: 16px; }
-    .hero .subheadline { font-size: 20px; margin-bottom: 24px; opacity: 0.95; font-weight: 400; }
-    .cta-button { background: #e74c3c; color: white; border: none; padding: 20px 40px; font-size: 20px; font-weight: 700; border-radius: 8px; cursor: pointer; display: inline-block; text-decoration: none; transition: transform 0.2s; margin: 30px 0; box-shadow: 0 4px 15px rgba(231,76,60,0.3); }
-    .cta-button:hover { transform: translateY(-2px); }
-    .section { background: white; padding: 40px 30px; margin-bottom: 30px; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
-    .section h2 { font-size: 32px; margin-bottom: 20px; color: #1e3c72; }
-    .guarantee-box { background: #d4edda; border: 3px solid #28a745; padding: 35px; border-radius: 12px; margin: 40px 0; }
-    .guarantee-box h3 { color: #155724; margin-top: 0; font-size: 28px; }
-    .footer { text-align: center; padding: 40px 20px; color: #6c757d; font-size: 14px; }
-    .greeting { font-size: 24px; color: white; margin-bottom: 20px; }
-    @media (max-width: 600px) { .hero h1 { font-size: 32px; } .section { padding: 30px 20px; } }
+
+    .hero { background: linear-gradient(150deg, #0a1628 0%, #1a2f5e 60%, #243d7a 100%); color: white; padding: 70px 20px 50px; text-align: center; }
+    .hero .badge { display: inline-block; background: rgba(255,200,0,0.2); border: 1px solid rgba(255,200,0,0.5); color: #ffd700; font-size: 13px; font-weight: 700; letter-spacing: 1.5px; padding: 6px 16px; border-radius: 20px; margin-bottom: 24px; text-transform: uppercase; }
+    .hero h1 { font-size: 44px; font-weight: 900; line-height: 1.15; margin-bottom: 20px; letter-spacing: -0.5px; }
+    .hero h1 span { color: #ffd700; }
+    .hero .subheadline { font-size: 20px; margin-bottom: 10px; opacity: 0.9; max-width: 580px; margin-left: auto; margin-right: auto; }
+    .hero .proof-line { font-size: 14px; opacity: 0.7; margin-top: 16px; }
+    .greeting { font-size: 18px; color: #ffd700; margin-bottom: 16px; font-weight: 600; }
+
+    .cta-button { background: linear-gradient(135deg, #e74c3c, #c0392b); color: white; border: none; padding: 22px 48px; font-size: 20px; font-weight: 800; border-radius: 8px; cursor: pointer; display: inline-block; text-decoration: none; margin: 28px 0 10px; box-shadow: 0 6px 25px rgba(231,76,60,0.45); letter-spacing: 0.3px; transition: transform 0.15s, box-shadow 0.15s; }
+    .cta-button:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(231,76,60,0.55); }
+    .cta-button.full { width: 100%; text-align: center; }
+    .cta-sub { font-size: 13px; opacity: 0.65; margin-top: 6px; }
+
+    .section { background: white; padding: 44px 36px; margin: 24px 0; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+    .section h2 { font-size: 30px; font-weight: 800; margin-bottom: 18px; color: #0a1628; line-height: 1.25; }
+    .section p { font-size: 17px; color: #333; margin-bottom: 14px; }
+    .section p:last-child { margin-bottom: 0; }
+
+    .pain { border-left: 4px solid #e74c3c; }
+    .pain h2 { color: #c0392b; }
+
+    .stats-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin: 24px 0; text-align: center; }
+    .stat-item { background: #fff3f3; border: 1px solid #ffcccc; border-radius: 10px; padding: 20px 12px; }
+    .stat-item .number { font-size: 32px; font-weight: 900; color: #c0392b; }
+    .stat-item .label { font-size: 13px; color: #666; margin-top: 4px; }
+
+    .mechanism-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 24px; }
+    .mechanism-item { background: #f0f7ff; border: 1px solid #cce0ff; border-radius: 10px; padding: 20px 18px; }
+    .mechanism-item .icon { font-size: 28px; margin-bottom: 8px; }
+    .mechanism-item h4 { font-size: 15px; font-weight: 700; color: #1a2f5e; margin-bottom: 6px; }
+    .mechanism-item p { font-size: 14px; color: #555; margin: 0; }
+
+    .proof-block { background: #f0f7ff; border: 1px solid #cce0ff; border-radius: 10px; padding: 24px; margin: 20px 0; }
+    .proof-block .founder-tag { font-size: 12px; font-weight: 700; color: #1a2f5e; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 10px; }
+    .proof-block p { font-size: 16px; color: #1a1a2e; margin: 0; line-height: 1.6; }
+
+    .value-stack { border-left: 4px solid #27ae60; }
+    .value-item { display: flex; justify-content: space-between; align-items: flex-start; padding: 14px 0; border-bottom: 1px solid #f0f0f0; }
+    .value-item:last-child { border-bottom: none; }
+    .value-item .desc { flex: 1; }
+    .value-item .desc strong { font-size: 16px; color: #0a1628; display: block; margin-bottom: 3px; }
+    .value-item .desc span { font-size: 14px; color: #666; }
+    .value-item .price { font-size: 15px; font-weight: 700; color: #27ae60; white-space: nowrap; margin-left: 20px; }
+    .value-total { display: flex; justify-content: space-between; padding-top: 16px; margin-top: 8px; border-top: 2px solid #27ae60; }
+    .value-total .label { font-size: 17px; font-weight: 700; color: #0a1628; }
+    .value-total .amount { font-size: 17px; font-weight: 700; color: #27ae60; }
+    .value-final { text-align: center; margin-top: 20px; }
+    .value-final .you-pay { font-size: 14px; color: #666; margin-bottom: 4px; }
+    .value-final .price-big { font-size: 52px; font-weight: 900; color: #e74c3c; line-height: 1; }
+    .value-final .price-small { font-size: 22px; font-weight: 400; vertical-align: top; margin-top: 10px; display: inline-block; }
+
+    .guarantee-box { background: #f0fff4; border: 3px solid #27ae60; padding: 36px; border-radius: 14px; margin: 32px 0; text-align: center; }
+    .guarantee-box .guarantee-icon { font-size: 52px; margin-bottom: 12px; }
+    .guarantee-box h3 { color: #155724; font-size: 26px; font-weight: 800; margin-bottom: 14px; }
+    .guarantee-box p { font-size: 17px; color: #1a3320; max-width: 520px; margin: 0 auto; }
+
+    .faq-item { padding: 18px 0; border-bottom: 1px solid #eee; }
+    .faq-item:last-child { border-bottom: none; }
+    .faq-item .q { font-size: 17px; font-weight: 700; color: #0a1628; margin-bottom: 8px; }
+    .faq-item .a { font-size: 16px; color: #444; }
+
+    .urgency { background: #fff8e1; border: 2px solid #ffc107; border-radius: 10px; padding: 20px 24px; margin: 24px 0; text-align: center; }
+    .urgency p { font-size: 16px; color: #7d5200; font-weight: 600; margin: 0; }
+
+    .footer { text-align: center; padding: 40px 20px; color: #888; font-size: 13px; }
+
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 32px; }
+      .section { padding: 30px 22px; }
+      .mechanism-grid { grid-template-columns: 1fr; }
+      .stats-row { grid-template-columns: 1fr; }
+      .cta-button { padding: 20px 32px; font-size: 18px; }
+    }
   </style>
 </head>
 <body>
+
+  <!-- HERO -->
   <div class="hero">
     <div class="container">
-      <div class="greeting" id="greeting">Olá visitante!</div>
-      <h1>Acorde Com Energia em 7 Dias</h1>
-      <p class="subheadline">Evite virar diabético. Normalize seus exames.</p>
-      <p style="font-size: 16px; opacity: 0.9;">O protocolo exato para reverter síndrome metabólica, normalizar glicemia e recuperar sua saúde.</p>
-      <button class="cta-button">🚀 Liberar meu acesso</button>
+      <div class="greeting" id="greeting">Olá!</div>
+      <div class="badge">Protocolo de 7 dias — Guia Digital</div>
+      <h1>Seus exames assustam.<br><span>Dá para reverter</span><br>em 7 dias.</h1>
+      <p class="subheadline">O protocolo que combina alimentação low-carb, jejum estratégico e exercícios metabólicos para normalizar glicemia, pressão e colesterol — sem medicação adicional.</p>
+      <a href="#comprar" class="cta-button">Quero o protocolo — R$ 97</a>
+      <p class="cta-sub">Acesso imediato · Garantia de 7 dias</p>
+      <p class="proof-line">Protocolo desenvolvido e testado pelo founder — resultados documentados.</p>
     </div>
   </div>
+
   <div class="container">
+
+    <!-- DOR -->
+    <div class="section pain">
+      <h2>Você já sabe o que pode acontecer se não fizer nada.</h2>
+      <p>Glicemia em 108. Pressão em 13×9. Colesterol LDL acima do limite. O médico falou "tem que mudar o estilo de vida" — mas não disse como, exatamente.</p>
+      <p>E no fundo, aquela imagem aparece: o parente que ficou diabético. O vizinho que teve derrame. Você sabe que está no caminho errado, mas cada dieta que tenta dura duas semanas.</p>
+      <p>Síndrome metabólica não é sentença. É sinal. Seu corpo está pedindo uma mudança específica — e quando você dá o que ele precisa, ele responde rápido.</p>
+    </div>
+
+    <!-- NÚMEROS -->
     <div class="section">
-      <h2>Seus exames revelam a verdade</h2>
-      <p>Glicemia alta. Pressão elevada. Colesterol ruim. Você já ouviu esses diagnósticos tantas vezes que nem escuta mais o médico falar.</p>
-      <p>E no fundo você sabe: se não fizer nada agora, vai acabar como aquele parente que ficou diabético. Aquela imagem assusta.</p>
-      <p>Mas há esperança. Síndrome metabólica é reversível. Com o protocolo certo.</p>
+      <h2>O que está em jogo</h2>
+      <div class="stats-row">
+        <div class="stat-item">
+          <div class="number">3×</div>
+          <div class="label">mais risco de diabetes tipo 2 com síndrome metabólica não tratada</div>
+        </div>
+        <div class="stat-item">
+          <div class="number">7</div>
+          <div class="label">dias para sentir a primeira diferença com o protocolo correto</div>
+        </div>
+        <div class="stat-item">
+          <div class="number">4</div>
+          <div class="label">pilares simultâneos que reativam o metabolismo</div>
+        </div>
+      </div>
     </div>
+
+    <!-- MECANISMO -->
+    <div class="section">
+      <h2>Por que a dieta isolada não resolve</h2>
+      <p>Síndrome metabólica é um conjunto de condições relacionadas. Atacar só a alimentação, só o exercício ou só o estresse resolve uma parte. O problema continua porque os outros fatores seguem desregulados.</p>
+      <p>O Reset Primal atua nos 4 pontos ao mesmo tempo:</p>
+      <div class="mechanism-grid">
+        <div class="mechanism-item">
+          <div class="icon">⏱️</div>
+          <h4>Jejum Intermitente Calibrado</h4>
+          <p>Reduz insulina cronicamente elevada — o principal driver da síndrome metabólica — sem medicação.</p>
+        </div>
+        <div class="mechanism-item">
+          <div class="icon">🥩</div>
+          <h4>Alimentação Low-Carb Estratégica</h4>
+          <p>Corta os picos de glicemia que sobrecarregam o pâncreas e normalizam colesterol e triglicerídeos.</p>
+        </div>
+        <div class="mechanism-item">
+          <div class="icon">🔥</div>
+          <h4>Exercícios Metabólicos</h4>
+          <p>Aumentam sensibilidade à insulina nas células musculares — o equivalente a "abrir a porta" para a glicose entrar sem pedir mais insulina.</p>
+        </div>
+        <div class="mechanism-item">
+          <div class="icon">⚖️</div>
+          <h4>Regulação Hormonal</h4>
+          <p>Protocolo que reduz cortisol e regula leptina — hormônios que, quando desregulados, sabotam qualquer dieta.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROVA DO FOUNDER -->
+    <div class="section">
+      <h2>Eu testei antes de publicar</h2>
+      <p>Esse protocolo não saiu de um livro. Saiu do meu próprio sangue — literalmente.</p>
+      <div class="proof-block">
+        <div class="founder-tag">Relato do Founder — Resultado documentado</div>
+        <p>"Minha glicemia estava em 112, triglicerídeos em 187, colesterol LDL limítrofe. O médico disse 'atenção'. Apliquei os 4 pilares do Reset Primal por 30 dias. Na reavaliação: glicemia 89, triglicerídeos 104, pressão normalizada. O que mais me surpreendeu foi a velocidade — em 7 dias eu já conseguia dormir sem acordar às 3h da manhã com fome."</p>
+      </div>
+      <p>Não é uma promessa de cura. É bioquímica documentada. Quando você remove os gatilhos metabólicos certos e adiciona os sinais hormonais certos, o corpo se ajusta.</p>
+    </div>
+
+    <!-- OFERTA / VALUE STACK -->
+    <div class="section value-stack" id="comprar">
+      <h2>O que você recebe hoje</h2>
+      <div class="value-item">
+        <div class="desc">
+          <strong>Guia Reset Primal — Protocolo Completo de 7 Dias</strong>
+          <span>O passo a passo diário para regulação metabólica: alimentação, jejum, exercícios e sequência exata.</span>
+        </div>
+        <div class="price">R$ 147</div>
+      </div>
+      <div class="value-item">
+        <div class="desc">
+          <strong>Bônus: Cardápio Low-Carb Anti-Inflamatório de 7 Dias</strong>
+          <span>Lista de compras pronta + receitas simples focadas em alimentos que reduzem glicemia e colesterol.</span>
+        </div>
+        <div class="price">R$ 47</div>
+      </div>
+      <div class="value-item">
+        <div class="desc">
+          <strong>Bônus: Guia de Jejum para Controle Metabólico</strong>
+          <span>Como usar o jejum intermitente especificamente para síndrome metabólica — protocolo diferente do jejum para emagrecimento comum.</span>
+        </div>
+        <div class="price">R$ 37</div>
+      </div>
+      <div class="value-item">
+        <div class="desc">
+          <strong>Bônus: Os 5 Exercícios Metabólicos do Protocolo</strong>
+          <span>Movimentos específicos para sensibilidade à insulina — menos de 20 minutos por dia, sem academia.</span>
+        </div>
+        <div class="price">R$ 67</div>
+      </div>
+      <div class="value-total">
+        <span class="label">Valor total</span>
+        <span class="amount">R$ 298</span>
+      </div>
+      <div class="value-final">
+        <div class="you-pay">Você paga apenas</div>
+        <div class="price-big"><span class="price-small">R$&nbsp;</span>97</div>
+      </div>
+      <a href="https://pay.hotmart.com/W103146395W?bid=1772027350275" class="cta-button full">Quero o protocolo agora — R$ 97</a>
+      <p class="cta-sub">Acesso imediato após o pagamento · Funciona em celular e computador</p>
+    </div>
+
+    <!-- GARANTIA -->
     <div class="guarantee-box">
-      <h3>✓ Garantia de Bem-Estar de 7 Dias</h3>
-      <p style="font-size: 18px; margin: 20px 0;">Invista R$ 97 agora. Siga o protocolo por 7 dias.</p>
-      <p style="font-size: 19px; font-weight: 600; color: #155724;">Se seus exames não começarem a melhorar, se não sentir diferença real — seu dinheiro volta na íntegra.</p>
+      <div class="guarantee-icon">🛡️</div>
+      <h3>Garantia de 7 Dias — Risco Zero</h3>
+      <p>Siga o protocolo por 7 dias completos. Se você não sentir diferença real na sua energia, clareza mental e bem-estar geral — me manda uma mensagem e devolvo cada centavo. Sem perguntas. Sem burocracia.</p>
     </div>
-    <button class="cta-button" style="width: 100%;">🚀 Começar Agora</button>
+
+    <div class="urgency">
+      <p>Este guia está disponível por R$ 97 durante o período de lançamento. O preço regular será R$ 147.</p>
+    </div>
+
+    <!-- FAQ -->
+    <div class="section">
+      <h2>Perguntas frequentes</h2>
+      <div class="faq-item">
+        <div class="q">Preciso parar a medicação que o médico receitou?</div>
+        <div class="a">Não. Este protocolo é complementar ao acompanhamento médico, não substituto. Continue com suas medicações e avise seu médico que está iniciando mudanças alimentares.</div>
+      </div>
+      <div class="faq-item">
+        <div class="q">Meus exames vão melhorar em 7 dias?</div>
+        <div class="a">Resultados laboratoriais variam por pessoa e dependem de reavaliação médica. O que a maioria das pessoas relata em 7 dias é melhora subjetiva significativa: mais energia, menos inchaço, menor vontade de doces.</div>
+      </div>
+      <div class="faq-item">
+        <div class="q">É difícil seguir tendo uma vida normal?</div>
+        <div class="a">O protocolo foi desenhado para pessoas que trabalham, têm família e não podem passar o dia pensando em comida. As refeições são simples. O jejum é adaptável. Os exercícios levam menos de 20 minutos.</div>
+      </div>
+      <div class="faq-item">
+        <div class="q">Em quanto tempo recebo o guia?</div>
+        <div class="a">Acesso imediato. Confirmado o pagamento, você recebe o link por e-mail em menos de 2 minutos.</div>
+      </div>
+    </div>
+
+    <!-- CTA FINAL -->
+    <div style="text-align: center; padding: 20px 0 40px;">
+      <a href="https://pay.hotmart.com/W103146395W?bid=1772027350275" class="cta-button">Quero o protocolo — R$ 97</a>
+      <p class="cta-sub">Garantia de 7 dias · Acesso imediato · Sem risco</p>
+    </div>
+
   </div>
+
   <div class="footer">
     <p>© 2026 Reset Primal. Todos os direitos reservados.</p>
-    <p style="margin-top: 20px; font-size: 13px;">Este site não oferece conselhos médicos. Consulte seu médico.</p>
+    <p style="margin-top: 12px;">Este guia não substitui acompanhamento médico. Consulte seu médico antes de iniciar qualquer protocolo alimentar ou de exercícios.</p>
   </div>
 
   <script>
-    // Parse URL params (Story 2.0, 2.1)
     const params = new URLSearchParams(window.location.search);
-    const nome = params.get('nome') || 'visitante';
-
-    // Display personalized greeting
-    document.getElementById('greeting').textContent = `Olá, ${nome}!`;
-
-    console.log('LP Síndrome carregada com dados:', {
-      avatar: params.get('avatar'),
-      nome: nome,
-      scores: {
-        m: params.get('m'),
-        p: params.get('p'),
-        s: params.get('s')
-      }
-    });
+    const nome = params.get('nome');
+    if (nome) {
+      document.getElementById('greeting').textContent = `Olá, ${nome}!`;
+    } else {
+      document.getElementById('greeting').style.display = 'none';
+    }
   </script>
 </body>
 </html>

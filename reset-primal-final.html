@@ -3,69 +3,301 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Reset Primal — Nevoeiro Mental</title>
+  <title>Reset Primal — Nevoeiro mental que não passa? O protocolo de 7 dias que limpa sua cabeça.</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #2c3e50; background: #f8f9fa; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a2e; background: #f5f5f0; }
     .container { max-width: 720px; margin: 0 auto; padding: 20px; }
-    .hero { background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); color: white; padding: 60px 20px 40px; text-align: center; border-radius: 0 0 20px 20px; margin-bottom: 40px; }
-    .hero h1 { font-size: 42px; font-weight: 800; line-height: 1.2; margin-bottom: 16px; }
-    .hero .subheadline { font-size: 20px; margin-bottom: 24px; opacity: 0.95; font-weight: 400; }
-    .cta-button { background: #e74c3c; color: white; border: none; padding: 20px 40px; font-size: 20px; font-weight: 700; border-radius: 8px; cursor: pointer; display: inline-block; text-decoration: none; transition: transform 0.2s; margin: 30px 0; box-shadow: 0 4px 15px rgba(231,76,60,0.3); }
-    .cta-button:hover { transform: translateY(-2px); }
-    .section { background: white; padding: 40px 30px; margin-bottom: 30px; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
-    .section h2 { font-size: 32px; margin-bottom: 20px; color: #1e3c72; }
-    .guarantee-box { background: #d4edda; border: 3px solid #28a745; padding: 35px; border-radius: 12px; margin: 40px 0; }
-    .guarantee-box h3 { color: #155724; margin-top: 0; font-size: 28px; }
-    .footer { text-align: center; padding: 40px 20px; color: #6c757d; font-size: 14px; }
-    .greeting { font-size: 24px; color: white; margin-bottom: 20px; }
-    @media (max-width: 600px) { .hero h1 { font-size: 32px; } .section { padding: 30px 20px; } }
+
+    .hero { background: linear-gradient(150deg, #0d1b2a 0%, #1b2d4f 60%, #253d6e 100%); color: white; padding: 70px 20px 50px; text-align: center; }
+    .hero .badge { display: inline-block; background: rgba(255,200,0,0.2); border: 1px solid rgba(255,200,0,0.5); color: #ffd700; font-size: 13px; font-weight: 700; letter-spacing: 1.5px; padding: 6px 16px; border-radius: 20px; margin-bottom: 24px; text-transform: uppercase; }
+    .hero h1 { font-size: 44px; font-weight: 900; line-height: 1.15; margin-bottom: 20px; letter-spacing: -0.5px; }
+    .hero h1 span { color: #ffd700; }
+    .hero .subheadline { font-size: 20px; margin-bottom: 10px; opacity: 0.9; max-width: 580px; margin-left: auto; margin-right: auto; }
+    .hero .proof-line { font-size: 14px; opacity: 0.7; margin-top: 16px; }
+    .greeting { font-size: 18px; color: #ffd700; margin-bottom: 16px; font-weight: 600; }
+
+    .cta-button { background: linear-gradient(135deg, #e74c3c, #c0392b); color: white; border: none; padding: 22px 48px; font-size: 20px; font-weight: 800; border-radius: 8px; cursor: pointer; display: inline-block; text-decoration: none; margin: 28px 0 10px; box-shadow: 0 6px 25px rgba(231,76,60,0.45); letter-spacing: 0.3px; transition: transform 0.15s, box-shadow 0.15s; }
+    .cta-button:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(231,76,60,0.55); }
+    .cta-button.full { width: 100%; text-align: center; }
+    .cta-sub { font-size: 13px; opacity: 0.65; margin-top: 6px; }
+
+    .section { background: white; padding: 44px 36px; margin: 24px 0; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+    .section h2 { font-size: 30px; font-weight: 800; margin-bottom: 18px; color: #0d1b2a; line-height: 1.25; }
+    .section p { font-size: 17px; color: #333; margin-bottom: 14px; }
+    .section p:last-child { margin-bottom: 0; }
+
+    .pain { border-left: 4px solid #e74c3c; }
+    .pain h2 { color: #c0392b; }
+
+    .symptoms-list { list-style: none; margin: 20px 0; }
+    .symptoms-list li { padding: 10px 0 10px 36px; border-bottom: 1px solid #f5f5f5; position: relative; font-size: 16px; color: #333; }
+    .symptoms-list li:before { content: "✗"; position: absolute; left: 0; color: #e74c3c; font-weight: 900; font-size: 18px; }
+    .symptoms-list li:last-child { border-bottom: none; }
+
+    .mechanism-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 24px; }
+    .mechanism-item { background: #f0f7ff; border: 1px solid #cce0ff; border-radius: 10px; padding: 20px 18px; }
+    .mechanism-item .icon { font-size: 28px; margin-bottom: 8px; }
+    .mechanism-item h4 { font-size: 15px; font-weight: 700; color: #1b2d4f; margin-bottom: 6px; }
+    .mechanism-item p { font-size: 14px; color: #555; margin: 0; }
+
+    .proof-block { background: #f0f7ff; border: 1px solid #cce0ff; border-radius: 10px; padding: 24px; margin: 20px 0; }
+    .proof-block .founder-tag { font-size: 12px; font-weight: 700; color: #1b2d4f; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 10px; }
+    .proof-block p { font-size: 16px; color: #1a1a2e; margin: 0; line-height: 1.6; }
+
+    .value-stack { border-left: 4px solid #27ae60; }
+    .value-item { display: flex; justify-content: space-between; align-items: flex-start; padding: 14px 0; border-bottom: 1px solid #f0f0f0; }
+    .value-item:last-child { border-bottom: none; }
+    .value-item .desc { flex: 1; }
+    .value-item .desc strong { font-size: 16px; color: #0d1b2a; display: block; margin-bottom: 3px; }
+    .value-item .desc span { font-size: 14px; color: #666; }
+    .value-item .price { font-size: 15px; font-weight: 700; color: #27ae60; white-space: nowrap; margin-left: 20px; }
+    .value-total { display: flex; justify-content: space-between; padding-top: 16px; margin-top: 8px; border-top: 2px solid #27ae60; }
+    .value-total .label { font-size: 17px; font-weight: 700; color: #0d1b2a; }
+    .value-total .amount { font-size: 17px; font-weight: 700; color: #27ae60; }
+    .value-final { text-align: center; margin-top: 20px; }
+    .value-final .you-pay { font-size: 14px; color: #666; margin-bottom: 4px; }
+    .value-final .price-big { font-size: 52px; font-weight: 900; color: #e74c3c; line-height: 1; }
+    .value-final .price-small { font-size: 22px; font-weight: 400; vertical-align: top; margin-top: 10px; display: inline-block; }
+
+    .guarantee-box { background: #f0fff4; border: 3px solid #27ae60; padding: 36px; border-radius: 14px; margin: 32px 0; text-align: center; }
+    .guarantee-box .guarantee-icon { font-size: 52px; margin-bottom: 12px; }
+    .guarantee-box h3 { color: #155724; font-size: 26px; font-weight: 800; margin-bottom: 14px; }
+    .guarantee-box p { font-size: 17px; color: #1a3320; max-width: 520px; margin: 0 auto; }
+
+    .faq-item { padding: 18px 0; border-bottom: 1px solid #eee; }
+    .faq-item:last-child { border-bottom: none; }
+    .faq-item .q { font-size: 17px; font-weight: 700; color: #0d1b2a; margin-bottom: 8px; }
+    .faq-item .a { font-size: 16px; color: #444; }
+
+    .urgency { background: #fff8e1; border: 2px solid #ffc107; border-radius: 10px; padding: 20px 24px; margin: 24px 0; text-align: center; }
+    .urgency p { font-size: 16px; color: #7d5200; font-weight: 600; margin: 0; }
+
+    .before-after { background: #f8f0ff; border: 1px solid #d8bfff; border-radius: 12px; padding: 24px; margin: 20px 0; }
+    .before-after-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 16px; }
+    .before-col, .after-col { padding: 16px; border-radius: 8px; }
+    .before-col { background: #fff0f0; }
+    .after-col { background: #f0fff0; }
+    .col-label { font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 10px; }
+    .before-col .col-label { color: #c0392b; }
+    .after-col .col-label { color: #27ae60; }
+    .col-item { font-size: 14px; color: #333; padding: 5px 0; border-bottom: 1px solid rgba(0,0,0,0.06); }
+    .col-item:last-child { border-bottom: none; }
+
+    .footer { text-align: center; padding: 40px 20px; color: #888; font-size: 13px; }
+
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 32px; }
+      .section { padding: 30px 22px; }
+      .mechanism-grid { grid-template-columns: 1fr; }
+      .before-after-grid { grid-template-columns: 1fr; }
+      .cta-button { padding: 20px 32px; font-size: 18px; }
+    }
   </style>
 </head>
 <body>
+
+  <!-- HERO -->
   <div class="hero">
     <div class="container">
-      <div class="greeting" id="greeting">Olá visitante!</div>
-      <h1>Acorde Com Energia em 7 Dias</h1>
-      <p class="subheadline">Nevoeiro Mental? Vamos resolver isso juntos.</p>
-      <p style="font-size: 16px; opacity: 0.9;">O protocolo exato para recuperar clareza mental, foco e produtividade.</p>
-      <button class="cta-button">🚀 Liberar meu acesso</button>
+      <div class="greeting" id="greeting">Olá!</div>
+      <div class="badge">Protocolo de 7 dias — Guia Digital</div>
+      <h1>Nevoeiro mental<br>que não passa?<br><span>O protocolo de 7 dias</span><br>que limpa sua cabeça.</h1>
+      <p class="subheadline">Quando você não consegue focar, está esquecendo tudo e sente cansaço mesmo dormindo — o problema não é mental. É metabólico.</p>
+      <a href="#comprar" class="cta-button">Quero o protocolo — R$ 97</a>
+      <p class="cta-sub">Acesso imediato · Garantia de 7 dias</p>
+      <p class="proof-line">Protocolo desenvolvido e testado pelo founder — resultados documentados.</p>
     </div>
   </div>
+
   <div class="container">
+
+    <!-- DOR -->
+    <div class="section pain">
+      <h2>Você não está ficando mais velho. Seu cérebro está com fome.</h2>
+      <p>Você chega ao meio da tarde e simplesmente para. Tenta escrever um e-mail importante e a mente vagueia. Você lê um parágrafo três vezes e não absorve nada. Esquece nomes, compromissos, onde deixou as coisas.</p>
+      <p>O mundo inteiro chama isso de "estresse" ou "vida moderna" e manda você meditar.</p>
+      <p>A verdade é mais simples e mais resolvível: seu cérebro está funcionando com o combustível errado.</p>
+      <p>Quando o metabolismo está desregulado — insulina alta, cortisol elevado, inflamação silenciosa — o cérebro paga o preço primeiro. Nevoeiro mental é sintoma metabólico, não psicológico.</p>
+    </div>
+
+    <!-- SINTOMAS DE RECONHECIMENTO -->
     <div class="section">
-      <h2>Você está no lugar certo</h2>
-      <p>Se você sente dificuldade de concentração, nevoeiro mental que não deixa você trabalhar direito, ou aquela sensação constante de cansaço mental — aqui temos a solução.</p>
+      <h2>Você se reconhece em algum desses?</h2>
+      <ul class="symptoms-list">
+        <li>Dificuldade de concentração mesmo em tarefas simples</li>
+        <li>Acordar cansado depois de 8 horas de sono</li>
+        <li>Irritabilidade repentina sem motivo claro</li>
+        <li>Queda de produtividade nas últimas horas do dia</li>
+        <li>Vontade intensa de doce ou carboidrato à tarde</li>
+        <li>Memória que "trava" — especialmente com nomes e datas</li>
+        <li>Sensação de estar sempre "no modo lento"</li>
+      </ul>
+      <p>Se você marcou 3 ou mais, o problema é metabólico. E é reversível.</p>
     </div>
+
+    <!-- MECANISMO -->
+    <div class="section">
+      <h2>O que realmente está acontecendo com sua cabeça</h2>
+      <p>Seu cérebro consome 20% de toda a energia do corpo. Quando a insulina está cronicamente elevada, quando o cortisol não normaliza à noite, quando há inflamação sistêmica de baixo grau — o fornecimento de energia para o cérebro fica instável.</p>
+      <p>O Reset Primal normaliza os 4 fatores que determinam clareza mental:</p>
+      <div class="mechanism-grid">
+        <div class="mechanism-item">
+          <div class="icon">⏱️</div>
+          <h4>Jejum Intermitente Estratégico</h4>
+          <p>Força o corpo a produzir cetonas — o combustível premium do cérebro — que atravessam a barreira hematoencefálica e melhoram foco em horas.</p>
+        </div>
+        <div class="mechanism-item">
+          <div class="icon">🥩</div>
+          <h4>Alimentação Low-Carb Anti-Inflamatória</h4>
+          <p>Elimina os picos de glicemia que causam o "crash" de energia à tarde e a névoa mental pós-almoço.</p>
+        </div>
+        <div class="mechanism-item">
+          <div class="icon">🔥</div>
+          <h4>Exercícios Metabólicos</h4>
+          <p>Aumentam BDNF — o "fertilizante do cérebro" — e melhoram memória de curto prazo de forma mensurável.</p>
+        </div>
+        <div class="mechanism-item">
+          <div class="icon">⚖️</div>
+          <h4>Regulação do Cortisol</h4>
+          <p>Protocolo específico de timing alimentar e exercício que normaliza o ritmo circadiano do cortisol — o hormônio que controla quando você é produtivo.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ANTES E DEPOIS -->
+    <div class="section">
+      <h2>Antes e depois do protocolo</h2>
+      <div class="before-after">
+        <div class="before-after-grid">
+          <div class="before-col">
+            <div class="col-label">Antes</div>
+            <div class="col-item">Levanta sem energia</div>
+            <div class="col-item">Crash após almoço</div>
+            <div class="col-item">Foco dura 30 minutos</div>
+            <div class="col-item">Vontade de doce constante</div>
+            <div class="col-item">Dorme mal, acorda cansado</div>
+            <div class="col-item">Memória "lenta"</div>
+          </div>
+          <div class="after-col">
+            <div class="col-label">Depois de 7 dias</div>
+            <div class="col-item">Acorda com clareza</div>
+            <div class="col-item">Energia estável no período</div>
+            <div class="col-item">Blocos de foco de 2-3h</div>
+            <div class="col-item">Apetite controlado</div>
+            <div class="col-item">Sono profundo, desperta descansado</div>
+            <div class="col-item">Memória mais rápida</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROVA DO FOUNDER -->
+    <div class="section">
+      <h2>Minha própria experiência</h2>
+      <p>Esse protocolo não veio de estudo teórico. Veio da necessidade.</p>
+      <div class="proof-block">
+        <div class="founder-tag">Relato do Founder — Resultado documentado</div>
+        <p>"Em 2024 eu chegava ao escritório e ficava olhando para a tela por 40 minutos sem conseguir começar nada. Precisava de café atrás de café para manter algum foco. Acordava cansado. Pensando que era burnout, fui ao médico — exames mostraram glicemia limítrofe e cortisol desregulado. Apliquei os 4 pilares por 7 dias: no terceiro dia já percebi diferença no foco matinal. Na segunda semana, trabalho que levava 4h passava a levar 2h. A cabeça estava literalmente mais rápida."</p>
+      </div>
+    </div>
+
+    <!-- OFERTA / VALUE STACK -->
+    <div class="section value-stack" id="comprar">
+      <h2>O que você recebe hoje</h2>
+      <div class="value-item">
+        <div class="desc">
+          <strong>Guia Reset Primal — Protocolo Completo de 7 Dias</strong>
+          <span>Passo a passo diário para clareza mental: o que comer, quando comer, quais exercícios fazer e em qual ordem para maximizar energia cerebral.</span>
+        </div>
+        <div class="price">R$ 147</div>
+      </div>
+      <div class="value-item">
+        <div class="desc">
+          <strong>Bônus: Cardápio Low-Carb para Clareza Mental de 7 Dias</strong>
+          <span>Lista de compras pronta com alimentos específicos para função cerebral — ômega 3, antioxidantes, precursores de neurotransmissores.</span>
+        </div>
+        <div class="price">R$ 47</div>
+      </div>
+      <div class="value-item">
+        <div class="desc">
+          <strong>Bônus: Guia de Jejum para Produção de Cetonas</strong>
+          <span>Como estruturar sua janela alimentar para maximizar produção de cetonas — o combustível de alta octanagem do cérebro.</span>
+        </div>
+        <div class="price">R$ 37</div>
+      </div>
+      <div class="value-item">
+        <div class="desc">
+          <strong>Bônus: Os 5 Exercícios Metabólicos do Protocolo</strong>
+          <span>Movimentos que aumentam BDNF e melhoram memória — menos de 20 minutos por dia, sem equipamento.</span>
+        </div>
+        <div class="price">R$ 67</div>
+      </div>
+      <div class="value-total">
+        <span class="label">Valor total</span>
+        <span class="amount">R$ 298</span>
+      </div>
+      <div class="value-final">
+        <div class="you-pay">Você paga apenas</div>
+        <div class="price-big"><span class="price-small">R$&nbsp;</span>97</div>
+      </div>
+      <a href="https://pay.hotmart.com/W103146395W?bid=1772027350275" class="cta-button full">Quero o protocolo agora — R$ 97</a>
+      <p class="cta-sub">Acesso imediato após o pagamento · Funciona em celular e computador</p>
+    </div>
+
+    <!-- GARANTIA -->
     <div class="guarantee-box">
-      <h3>✓ Garantia de Bem-Estar de 7 Dias</h3>
-      <p style="font-size: 18px; margin: 20px 0;">Comece agora por R$ 97. Siga o protocolo por 7 dias.</p>
-      <p style="font-size: 19px; font-weight: 600; color: #155724;">Se não acordar com mais energia e clareza mental — reembolso total, sem perguntas.</p>
+      <div class="guarantee-icon">🛡️</div>
+      <h3>Garantia de 7 Dias — Risco Zero</h3>
+      <p>Siga o protocolo por 7 dias completos. Se você não sentir diferença significativa na sua clareza mental, foco e energia — me manda uma mensagem e devolvo cada centavo. Sem perguntas. Sem burocracia.</p>
     </div>
-    <button class="cta-button" style="width: 100%;">🚀 Começar Agora</button>
+
+    <div class="urgency">
+      <p>Este guia está disponível por R$ 97 durante o período de lançamento. O preço regular será R$ 147.</p>
+    </div>
+
+    <!-- FAQ -->
+    <div class="section">
+      <h2>Perguntas frequentes</h2>
+      <div class="faq-item">
+        <div class="q">Funciona para quem trabalha muito e não tem tempo para cozinhar?</div>
+        <div class="a">Sim. As refeições do protocolo são simples e rápidas de preparar. O guia inclui opções para quem tem menos de 30 minutos para cozinhar.</div>
+      </div>
+      <div class="faq-item">
+        <div class="q">Em quantos dias começo a sentir diferença?</div>
+        <div class="a">A maioria das pessoas relata melhora perceptível no foco a partir do 3° dia — especialmente pela manhã, antes do que costumavam precisar de café.</div>
+      </div>
+      <div class="faq-item">
+        <div class="q">Posso seguir tomando cafeína?</div>
+        <div class="a">Sim, com uma adaptação de timing que está explicada no guia. O objetivo não é eliminar cafeína, mas deixar de depender dela para funcionar.</div>
+      </div>
+      <div class="faq-item">
+        <div class="q">Em quanto tempo recebo o guia?</div>
+        <div class="a">Acesso imediato. Confirmado o pagamento, você recebe o link por e-mail em menos de 2 minutos.</div>
+      </div>
+    </div>
+
+    <!-- CTA FINAL -->
+    <div style="text-align: center; padding: 20px 0 40px;">
+      <a href="https://pay.hotmart.com/W103146395W?bid=1772027350275" class="cta-button">Quero o protocolo — R$ 97</a>
+      <p class="cta-sub">Garantia de 7 dias · Acesso imediato · Sem risco</p>
+    </div>
+
   </div>
+
   <div class="footer">
     <p>© 2026 Reset Primal. Todos os direitos reservados.</p>
-    <p style="margin-top: 20px; font-size: 13px;">Este site não oferece conselhos médicos.</p>
+    <p style="margin-top: 12px;">Este guia não substitui acompanhamento médico. Consulte seu médico antes de iniciar qualquer protocolo alimentar ou de exercícios.</p>
   </div>
 
   <script>
-    // Parse URL params (Story 2.0, 2.1)
     const params = new URLSearchParams(window.location.search);
-    const nome = params.get('nome') || 'visitante';
-
-    // Display personalized greeting
-    document.getElementById('greeting').textContent = `Olá, ${nome}!`;
-
-    console.log('LP Mental carregada com dados:', {
-      avatar: params.get('avatar'),
-      nome: nome,
-      scores: {
-        m: params.get('m'),
-        p: params.get('p'),
-        s: params.get('s')
-      }
-    });
+    const nome = params.get('nome');
+    if (nome) {
+      document.getElementById('greeting').textContent = `Olá, ${nome}!`;
+    } else {
+      document.getElementById('greeting').style.display = 'none';
+    }
   </script>
 </body>
 </html>
